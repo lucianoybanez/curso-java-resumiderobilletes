@@ -8,7 +8,7 @@ package resumiderobilletes;
 
 /**
  *
- * @author libanez
+ * @author luciano Ybañez
  */
 public class Principal {
 
