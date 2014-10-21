@@ -20,7 +20,7 @@ public abstract class Cuenta
         saldo = pSaldo;        
     }
     
-    public double consultarSaldo()
+    public double getSaldo()
     {
         return saldo;
     }
@@ -47,4 +47,12 @@ public abstract class Cuenta
     }
 
     public abstract boolean retirar(double pMonto);    
+    
+    public boolean transferir(double pMonto,Cuenta pCuenta){        
+        boolean retiro = this.retirar(pMonto);
+        if (retiro){
+            pCuenta.depositar(pMonto);
+        }
+        return retiro;
+    }
 }
