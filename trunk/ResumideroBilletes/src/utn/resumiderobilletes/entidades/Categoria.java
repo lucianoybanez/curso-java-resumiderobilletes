@@ -10,7 +10,7 @@ package utn.resumiderobilletes.entidades;
  *
  * @author Luciano Ybañez
  */
-public enum RazonExtraccion {
+public enum Categoria {
     ALIMENTO("Alimento"),
     IMPUESTO("Impuesto"),
     ENTRETENIMIENTO("Entretenimiento"),
@@ -27,7 +27,7 @@ public enum RazonExtraccion {
         return descripcion;
     }
     
-    RazonExtraccion(String descripcion){
+    Categoria(String descripcion){
         this.descripcion = descripcion;
     }
     
