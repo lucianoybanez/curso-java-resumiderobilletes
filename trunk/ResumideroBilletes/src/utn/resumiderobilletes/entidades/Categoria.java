@@ -8,27 +8,22 @@ package utn.resumiderobilletes.entidades;
 
 /**
  *
- * @author Luciano Ybañez
+ * @author libanez
  */
-public enum Categoria {
-    ALIMENTO("Alimento"),
-    IMPUESTO("Impuesto"),
-    ENTRETENIMIENTO("Entretenimiento"),
-    TRANSPORTE("Transporte"),
-    ALQUILER("Alquiler"),
-    RECREACION("Recreacion"),
-    SALUD("Salud"),
-    DEUDA("Deuda"),
-    OTRO("Otro");
+public class Categoria {
     
-    private final String descripcion;
-    
-    public String getDescripcion(){
+    private int id ;
+
+    public int getId() {
+        return id;
+    }
+
+    public String getDescripcion() {
         return descripcion;
     }
     
-    Categoria(String descripcion){
-        this.descripcion = descripcion;
-    }
+    private String descripcion;
+    
+    
     
 }

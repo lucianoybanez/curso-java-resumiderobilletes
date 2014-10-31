@@ -6,8 +6,6 @@
 
 package utn.resumiderobilletes.entidades;
 
-import java.util.Objects;
-
 /**
  *
  * @author Luciano Ybañez
@@ -44,10 +42,7 @@ public class Movimiento {
 
     public void setCuenta(Cuenta cuenta) {
         this.cuenta = cuenta;
-    }
-
-    
-    
+    }    
     
     @Override
     public boolean equals(Object o){
@@ -55,9 +50,5 @@ public class Movimiento {
             return ((Movimiento)o).getNumero() == this.getNumero();
         }
         return true;
-    }
-    
-    
-    
-    
+    }    
 }
