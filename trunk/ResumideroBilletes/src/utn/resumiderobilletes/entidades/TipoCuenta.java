@@ -10,16 +10,10 @@ package utn.resumiderobilletes.entidades;
  *
  * @author Luciano Ybañez
  */
-public enum RazonEnum {
-    ALIMENTO("Alimento"),
-    IMPUESTO("Impuesto"),
-    ENTRETENIMIENTO("Entretenimiento"),
-    TRANSPORTE("Transporte"),
-    ALQUILER("Alquiler"),
-    RECREACION("Recreacion"),
-    SALUD("Salud"),
-    DEUDA("Deuda"),
-    OTRO("Otro");
+public enum TipoCuenta {
+    CAJADEAHORRO("Caja de Ahorro"),
+    BILLETERA("Billetera de bolsillo"),
+    TARJETADECREDITO("Tarjeta de Credito");    
     
     private final String descripcion;
     
@@ -27,7 +21,7 @@ public enum RazonEnum {
         return descripcion;
     }
     
-    RazonEnum(String descripcion){
+    TipoCuenta(String descripcion){
         this.descripcion = descripcion;
     }
     

@@ -12,6 +12,8 @@ package utn.resumiderobilletes.entidades;
  */
 public class TarjetaDeCredito extends Cuenta {
     
+    //TODO: La Tarjeta de Credito empieza en negativo
+    
     private final double interesRetirar = 0.1;
     
     private final double descubierto = 5000;
