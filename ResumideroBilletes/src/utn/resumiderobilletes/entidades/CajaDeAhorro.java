@@ -3,14 +3,15 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-
 package utn.resumiderobilletes.entidades;
+
+import java.io.Serializable;
 
 /**
  *
  * @author Luciano Ybañez
  */
-public class CajaDeAhorro extends Cuenta {
+public class CajaDeAhorro extends Cuenta implements Serializable {
 
     public CajaDeAhorro(int pNumeroCuenta, double pSaldo) {
         super(pNumeroCuenta, pSaldo);
@@ -18,15 +19,14 @@ public class CajaDeAhorro extends Cuenta {
 
     @Override
     public boolean retirar(double pMonto) {
-        
-        boolean result = false;        
-        if (pMonto <= saldo)
-        {
+
+        boolean result = false;
+        if (pMonto <= saldo) {
             saldo -= pMonto;
             result = true;
-        }        
+        }
 
         return result;
     }
-    
+
 }

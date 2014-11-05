@@ -3,7 +3,6 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-
 package utn.resumiderobilletes.excepciones;
 
 /**
@@ -19,5 +18,5 @@ public class ResumideroException extends RuntimeException {
     public ResumideroException(String message, Throwable cause) {
         super(message, cause);
     }
-    
+
 }
