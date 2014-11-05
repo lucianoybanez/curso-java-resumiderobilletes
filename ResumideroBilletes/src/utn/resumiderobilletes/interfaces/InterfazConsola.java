@@ -37,6 +37,9 @@ public class InterfazConsola {
                     case '2':
                         listarMovimientos();
                         break;
+                    case '3':
+                        listarCuentas();
+                        break;
                     case '6':
                         iniciarCategorias();
                         break;
@@ -71,6 +74,7 @@ public class InterfazConsola {
         System.out.println("0 - Crear Cuenta");
         System.out.println("1 - Crear Movimiento");
         System.out.println("2 - Listar Movimientos");
+        System.out.println("3 - Listar Cuentas");
         System.out.println("6 - Menú Categorias");
         System.out.println("7 - Importar Resumidero");
         System.out.println("8 - Exportar Resumidero");
@@ -84,25 +88,25 @@ public class InterfazConsola {
         ListaGenerica<Cuenta> lista = Archivo.getDatos().getCuentas();
         System.out.println("");
         System.out.println("Nuevo Cuenta");
-        System.out.print("Numero: ");
-        String wNumero = In.readLine();
+        int wNumero = lista.getCantidad() + 1;
+        System.out.println("Numero: " + wNumero);        
         System.out.print("Saldo: ");
-        String wSaldo = In.readLine();
+        double wSaldo = In.readDouble();
         listarTiposDeCuenta();
         TipoCuenta tipoCuenta = seleccionarTiposDeCuenta();
-        if (!wNumero.isEmpty() && (!wSaldo.isEmpty())) {
+        if (wSaldo > 0) {
             Cuenta cta;
             switch (tipoCuenta) {
                 case BILLETERA:
-                    cta = new Billetera(Integer.valueOf(wNumero), Double.valueOf(wSaldo));
+                    cta = new Billetera(wNumero, wSaldo);
                     break;
                 case CAJADEAHORRO:
-                    cta = new CajaDeAhorro(Integer.valueOf(wNumero), Double.valueOf(wSaldo));
+                    cta = new CajaDeAhorro(wNumero, wSaldo);
                     break;
                 case TARJETADECREDITO:
                     System.out.print("Nombre de la Tarjeta: ");
                     String wTarjeta = In.readLine();
-                    cta = new TarjetaDeCredito(Integer.valueOf(wNumero), Double.valueOf(wSaldo), wTarjeta);
+                    cta = new TarjetaDeCredito(wNumero, wSaldo, wTarjeta);
                     break;
                 default:
                     throw new ResumideroException("Problemas en metodo crearCuenta seleccionando el Tipo de Cuenta");
@@ -117,10 +121,10 @@ public class InterfazConsola {
     }
 
     private void listarTiposDeCuenta() {
-        System.out.print("Seleccione Tipo de Cuenta: ");
+        System.out.println("----Seleccione Tipo de Cuenta----");
         TipoCuenta[] valores = TipoCuenta.values();
         for (TipoCuenta tipo : valores) {
-            System.out.print(tipo.ordinal() + " " + tipo.getDescripcion());
+            System.out.println(tipo.ordinal() + " " + tipo.getDescripcion());
         }
     }
 
@@ -132,6 +136,17 @@ public class InterfazConsola {
             nro = In.readInt();
         } while (nro < 0 || nro > valores.length);
         return valores[nro];
+    }
+
+    private void listarCuentas() {
+        ListaGenerica<Cuenta> lista = Archivo.getDatos().getCuentas();
+        System.out.println("");
+        for (Cuenta cta : lista) {
+            System.out.println("Numero: " + cta.getNumeroCuenta() + "\t Saldo:" + cta.getSaldo()+ "\t Tipo:" + cta.getTipo());
+        }
+        System.out.println("Cantidad de Cuentas: " + lista.getCantidad());
+        System.out.println("");
+        In.readLine();
     }
 
     private void crearMovimiento() throws ResumideroValidationException {
@@ -172,8 +187,12 @@ public class InterfazConsola {
     private void listarMovimientos() {
         ListaGenerica<Movimiento> lista = Archivo.getDatos().getMovimientos();
         System.out.println("");
-        System.out.println(lista);
+        for (Movimiento mov : lista) {
+            System.out.println(mov.getFechaMovimiento() + "\t" + mov.getNumero());
+        }
+        System.out.println("Cantidad de Movimientos: " + lista.getCantidad());
         System.out.println("");
+        In.readLine();
     }
 
     private char menuCategorias() {
@@ -198,7 +217,6 @@ public class InterfazConsola {
         ListaGenerica<Categoria> lista = Archivo.getDatos().getCategorias();
         Categoria res = null;
         if (lista.getCantidad() > 0) {
-            System.out.println(lista);
             System.out.println("0 - Cancelar");
             int nro;
             do {
@@ -255,7 +273,10 @@ public class InterfazConsola {
     private void listarCategorias() {
         ListaGenerica<Categoria> lista = Archivo.getDatos().getCategorias();
         System.out.println("");
-        System.out.println(lista);
+        for (Categoria categoria : lista) {
+            System.out.println(categoria.getId() + " - " + categoria.getDescripcion());
+        }
+        System.out.println("Cantidad de Categorias: " + lista.getCantidad());
         System.out.println("");
     }
 

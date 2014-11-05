@@ -6,6 +6,7 @@
 package utn.resumiderobilletes;
 
 import utn.resumiderobilletes.interfaces.InterfazConsola;
+import utn.resumiderobilletes.repositorios.Archivo;
 
 /**
  *
@@ -18,11 +19,11 @@ public class Principal {
      */
     public static void main(String[] args) {
         boolean salida;
+        Archivo.cargarDatos();
         InterfazConsola consola = new InterfazConsola();
         do {
             salida = consola.iniciar();
         } while (!salida);
-
     }
 
 }

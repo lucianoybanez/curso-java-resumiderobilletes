@@ -22,19 +22,18 @@ public class Archivo {
 
     public static Datos getDatos() {
         if (datos == null) {
-            datos = cargarDatos();
+            cargarDatos();
         }
         return datos;
     }
 
-    private static Datos cargarDatos() {
-        Datos mDatos = new Datos();
+    public static void cargarDatos() {        
         File f = new File("Resumidero.jdb");
         if (f.exists()) {
             try {
                 FileInputStream fi = new FileInputStream(f);
                 ObjectInputStream oi = new ObjectInputStream(fi);
-                mDatos = (Datos) oi.readObject();
+                datos = (Datos) oi.readObject();
                 oi.close();
                 fi.close();
             } catch (IOException iOException) {
@@ -44,8 +43,9 @@ public class Archivo {
                 classNotFoundException.printStackTrace();
                 System.exit(2);
             }
-        }
-        return mDatos;
+        }else{
+            datos = new Datos();
+        }        
     }
 
     public static void guardar() {
