@@ -44,6 +44,8 @@ public abstract class Cuenta implements Serializable {
 
     public abstract boolean retirar(double pMonto);
 
+    public abstract String getTipo();
+    
     public boolean transferir(double pMonto, Cuenta pCuenta) {
         boolean retiro = this.retirar(pMonto);
         if (retiro) {

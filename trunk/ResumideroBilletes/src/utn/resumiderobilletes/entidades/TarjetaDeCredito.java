@@ -12,6 +12,8 @@ import java.io.Serializable;
  * @author Luciano Ybañez
  */
 public class TarjetaDeCredito extends Cuenta implements Serializable {
+    
+    private static final String TIPO = "Tarjeta de Credito";
 
     //TODO: La Tarjeta de Credito empieza en negativo
     private final double interesRetirar = 0.1;
@@ -45,6 +47,11 @@ public class TarjetaDeCredito extends Cuenta implements Serializable {
         }
 
         return resultado;
+    }
+
+    @Override
+    public String getTipo() {
+        return TIPO;
     }
 
 }

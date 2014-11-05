@@ -12,6 +12,8 @@ import java.io.Serializable;
  * @author Luciano Ybañez
  */
 public class CajaDeAhorro extends Cuenta implements Serializable {
+    
+    private static final String TIPO = "Caja de Ahorro";
 
     public CajaDeAhorro(int pNumeroCuenta, double pSaldo) {
         super(pNumeroCuenta, pSaldo);
@@ -27,6 +29,11 @@ public class CajaDeAhorro extends Cuenta implements Serializable {
         }
 
         return result;
+    }
+
+    @Override
+    public String getTipo() {
+            return TIPO;
     }
 
 }

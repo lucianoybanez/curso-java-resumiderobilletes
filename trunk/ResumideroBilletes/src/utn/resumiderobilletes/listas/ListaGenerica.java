@@ -93,5 +93,5 @@ public class ListaGenerica<T> implements Iterable<T>, Serializable {
             idxitems.remove(getKey((T) res));
             actual--;
         }
-    }
+    }    
 }
