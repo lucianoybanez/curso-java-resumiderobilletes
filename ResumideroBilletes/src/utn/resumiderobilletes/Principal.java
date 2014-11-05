@@ -6,6 +6,8 @@
 
 package utn.resumiderobilletes;
 
+import utn.resumiderobilletes.interfaces.InterfazConsola;
+
 /**
  *
  * @author luciano Ybañez
@@ -16,7 +18,12 @@ public class Principal {
      * @param args the command line arguments
      */
     public static void main(String[] args) {
-        // TODO code application logic here            
+        boolean salida;
+        InterfazConsola consola = new InterfazConsola();                        
+        do {            
+            salida = consola.iniciar();
+        } while (!salida);
+        
     }
     
 }

@@ -10,6 +10,14 @@ package utn.resumiderobilletes.excepciones;
  *
  * @author libanez
  */
-public class ResumideroException {
+public class ResumideroException extends RuntimeException {
+
+    public ResumideroException(String message) {
+        super(message);
+    }
+
+    public ResumideroException(String message, Throwable cause) {
+        super(message, cause);
+    }
     
 }
