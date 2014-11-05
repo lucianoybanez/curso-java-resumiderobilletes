@@ -4,11 +4,14 @@
  */
 package utn.resumiderobilletes.entidades;
 
+import java.io.Serializable;
+import utn.resumiderobilletes.excepciones.ResumideroValidationException;
+
 /**
  *
  * @author Luciano Ybañez
  */
-public abstract class Cuenta
+public abstract class Cuenta implements Serializable
 {
 
     private final int numeroCuenta;

@@ -6,13 +6,17 @@
 
 package utn.resumiderobilletes.entidades;
 
+import java.io.Serializable;
+
 /**
  *
  * @author libanez
  */
-public class Categoria {
+public class Categoria implements Serializable {
+
+    private final String  descripcion;    
     
-    private int id ;
+    private final  int id ;
 
     public int getId() {
         return id;
@@ -22,8 +26,9 @@ public class Categoria {
         return descripcion;
     }
     
-    private String descripcion;
-    
-    
+    public Categoria(int id, String descripcion) {
+        this.id = id;
+        this.descripcion = descripcion;
+    }
     
 }

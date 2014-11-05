@@ -57,7 +57,7 @@ public class Archivo {
     
     public static void guardar()
     {
-        File f = new File("Agenda.jdb");
+        File f = new File("Resumidero.jdb");
 
         try
         {
