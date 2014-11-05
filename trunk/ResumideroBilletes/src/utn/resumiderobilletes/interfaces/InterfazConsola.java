@@ -22,7 +22,7 @@ import utn.resumiderobilletes.repositorios.Archivo;
  */
 public class InterfazConsola {
 
-    public boolean iniciar() {        
+    public boolean iniciar() {
         try {
             char opc;
             do {

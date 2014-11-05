@@ -3,14 +3,15 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-
 package utn.resumiderobilletes.entidades;
+
+import java.io.Serializable;
 
 /**
  *
  * @author Luciano Ybañez
  */
-public class Billetera extends Cuenta {
+public class Billetera extends Cuenta implements Serializable {
 
     public Billetera(int pNumeroCuenta, double pSaldo) {
         super(pNumeroCuenta, pSaldo);
@@ -20,5 +21,5 @@ public class Billetera extends Cuenta {
     public boolean retirar(double pMonto) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
-    
+
 }

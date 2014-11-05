@@ -3,7 +3,6 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-
 package utn.resumiderobilletes;
 
 import utn.resumiderobilletes.interfaces.InterfazConsola;
@@ -19,11 +18,11 @@ public class Principal {
      */
     public static void main(String[] args) {
         boolean salida;
-        InterfazConsola consola = new InterfazConsola();                        
-        do {            
+        InterfazConsola consola = new InterfazConsola();
+        do {
             salida = consola.iniciar();
         } while (!salida);
-        
+
     }
-    
+
 }

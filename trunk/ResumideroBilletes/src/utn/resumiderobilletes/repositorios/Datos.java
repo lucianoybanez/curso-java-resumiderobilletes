@@ -3,7 +3,6 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-
 package utn.resumiderobilletes.repositorios;
 
 import java.io.Serializable;
@@ -18,11 +17,11 @@ import utn.resumiderobilletes.listas.ListaGenerica;
  */
 public class Datos implements Serializable {
 
-    private final ListaGenerica<Categoria> categorias;    
-    
-    private final ListaGenerica<Cuenta> cuentas;    
-    
-    private final ListaGenerica<Movimiento> movimientos;    
+    private final ListaGenerica<Categoria> categorias;
+
+    private final ListaGenerica<Cuenta> cuentas;
+
+    private final ListaGenerica<Movimiento> movimientos;
 
     public ListaGenerica<Movimiento> getMovimientos() {
         return movimientos;
@@ -35,11 +34,11 @@ public class Datos implements Serializable {
     public ListaGenerica<Categoria> getCategorias() {
         return categorias;
     }
-    
+
     public Datos() {
         cuentas = new ListaGenerica<>();
-        categorias = new ListaGenerica<>();        
+        categorias = new ListaGenerica<>();
         movimientos = new ListaGenerica<>();
-    }    
-    
+    }
+
 }

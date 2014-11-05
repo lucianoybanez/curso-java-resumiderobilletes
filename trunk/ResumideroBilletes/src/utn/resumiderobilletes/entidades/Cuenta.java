@@ -5,55 +5,48 @@
 package utn.resumiderobilletes.entidades;
 
 import java.io.Serializable;
-import utn.resumiderobilletes.excepciones.ResumideroValidationException;
 
 /**
  *
  * @author Luciano Ybañez
  */
-public abstract class Cuenta implements Serializable
-{
+public abstract class Cuenta implements Serializable {
 
     private final int numeroCuenta;
     protected double saldo;
 
-    public Cuenta(int pNumeroCuenta, double pSaldo)
-    {
+    public Cuenta(int pNumeroCuenta, double pSaldo) {
         numeroCuenta = pNumeroCuenta;
-        saldo = pSaldo;        
+        saldo = pSaldo;
     }
-    
-    public double getSaldo()
-    {
+
+    public double getSaldo() {
         return saldo;
     }
 
-    public void depositar(double pMonto)
-    {
+    public void depositar(double pMonto) {
         saldo += pMonto;
     }
 
-    public int getNumeroCuenta()
-    {
+    public int getNumeroCuenta() {
         return numeroCuenta;
     }
-    
+
     @Override
-    public String toString()
-    {
+    public String toString() {
         StringBuilder wRes = new StringBuilder();
-        
+
         wRes.append("\tNumero de Cuenta:\t").append(numeroCuenta);
         wRes.append("\n\tSaldo:\t").append(saldo);
-      
-        return wRes.toString();        
+
+        return wRes.toString();
     }
 
-    public abstract boolean retirar(double pMonto);    
-    
-    public boolean transferir(double pMonto,Cuenta pCuenta){        
+    public abstract boolean retirar(double pMonto);
+
+    public boolean transferir(double pMonto, Cuenta pCuenta) {
         boolean retiro = this.retirar(pMonto);
-        if (retiro){
+        if (retiro) {
             pCuenta.depositar(pMonto);
         }
         return retiro;

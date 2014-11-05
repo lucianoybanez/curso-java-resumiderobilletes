@@ -3,7 +3,6 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-
 package utn.resumiderobilletes.entidades;
 
 import java.io.Serializable;
@@ -14,9 +13,9 @@ import java.io.Serializable;
  */
 public class Categoria implements Serializable {
 
-    private final String  descripcion;    
-    
-    private final  int id ;
+    private final String descripcion;
+
+    private final int id;
 
     public int getId() {
         return id;
@@ -25,10 +24,10 @@ public class Categoria implements Serializable {
     public String getDescripcion() {
         return descripcion;
     }
-    
+
     public Categoria(int id, String descripcion) {
         this.id = id;
         this.descripcion = descripcion;
     }
-    
+
 }
