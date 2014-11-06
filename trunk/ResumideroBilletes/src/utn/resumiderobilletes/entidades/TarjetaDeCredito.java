@@ -11,24 +11,19 @@ import java.io.Serializable;
  *
  * @author Luciano Ybañez
  */
-public class TarjetaDeCredito extends Cuenta implements Serializable {
+public class TarjetaDeCredito extends Cuenta implements Serializable {     
+
+    private final String nombreTarjeta;    
     
-    private static final String TIPO = "Tarjeta de Credito";
+    private double saldoGastado;    
 
-    //TODO: La Tarjeta de Credito empieza en negativo
-    private final double interesRetirar = 0.1;
-
-    private final double descubierto = 5000;
-
-    private final String nombreTarjeta;
-
-    public TarjetaDeCredito(int pNumeroCuenta, double pSaldo, String tarjeta) {
-        super(pNumeroCuenta, pSaldo);
-        nombreTarjeta = tarjeta;
+    public double getSaldoGastado() {
+        return saldoGastado;
     }
 
-    public double getInteresRetirar() {
-        return interesRetirar;
+    public TarjetaDeCredito(int pNumeroCuenta, double pSaldo, String tarjeta) {
+        super(pNumeroCuenta,pSaldo);
+        nombreTarjeta = tarjeta;
     }
 
     public String getNombreTarjeta() {
@@ -39,19 +34,23 @@ public class TarjetaDeCredito extends Cuenta implements Serializable {
     public boolean retirar(double pMonto) {
         boolean resultado = false;
 
-        double saldoCalculado = descubierto + saldo;
+        double saldoCalculado = saldo - saldoGastado;
 
         if (pMonto <= saldoCalculado) {
-            saldo -= pMonto + (pMonto * interesRetirar);
+            saldoGastado += pMonto;
             resultado = true;
         }
-
         return resultado;
+    }
+    
+    @Override
+    public void depositar(double pmonto){
+        saldoGastado += pmonto;
     }
 
     @Override
     public String getTipo() {
-        return TIPO;
+        return TipoCuenta.TARJETADECREDITO.getDescripcion();
     }
 
 }

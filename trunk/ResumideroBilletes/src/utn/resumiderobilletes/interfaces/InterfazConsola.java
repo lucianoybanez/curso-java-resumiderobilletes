@@ -4,6 +4,10 @@
  */
 package utn.resumiderobilletes.interfaces;
 
+import java.text.DateFormat;
+import java.util.Date;
+import java.util.Iterator;
+import java.util.Locale;
 import utn.resumiderobilletes.entidades.Billetera;
 import utn.resumiderobilletes.entidades.CajaDeAhorro;
 import utn.resumiderobilletes.entidades.Categoria;
@@ -20,7 +24,9 @@ import utn.resumiderobilletes.repositorios.Archivo;
  *
  * @author Luciano Ybañez
  */
-public class InterfazConsola {
+public class InterfazConsola  {
+    
+    private static final String tab = "\t";
 
     public boolean iniciar() {
         try {
@@ -28,27 +34,27 @@ public class InterfazConsola {
             do {
                 opc = menuPPal();
                 switch (opc) {
-                    case '0':
+                    case '1':
                         crearCuenta();
                         break;
-                    case '1':
-                        crearMovimiento();
-                        break;
                     case '2':
-                        listarMovimientos();
-                        break;
-                    case '3':
                         listarCuentas();
                         break;
+                    case '3':
+                        nuevoDeposito();
+                        break;
+                    case '4':
+                        nuevoGasto();
+                        break;                    
+                    case '5':
+                        listarMovimientos();
+                        break;     
                     case '6':
                         iniciarCategorias();
                         break;
                     case '7':
-                        importarResumidero();
-                        break;
-                    case '8':
-                        exportarResumidero();
-                        break;
+                        listarMovimientosCategoria();
+                        break;                    
                     case 'X':
                         salida();
                         break;
@@ -71,13 +77,13 @@ public class InterfazConsola {
     public char menuPPal() {
         char opc;
         System.out.println("*** Menú Principal ***");
-        System.out.println("0 - Crear Cuenta");
-        System.out.println("1 - Crear Movimiento");
-        System.out.println("2 - Listar Movimientos");
-        System.out.println("3 - Listar Cuentas");
+        System.out.println("1 - Crear Cuenta");
+        System.out.println("2 - Listar Cuentas");
+        System.out.println("3 - Nuevo Deposito");
+        System.out.println("4 - Nuevo Gasto");        
+        System.out.println("5 - Listar Movimientos");        
         System.out.println("6 - Menú Categorias");
-        System.out.println("7 - Importar Resumidero");
-        System.out.println("8 - Exportar Resumidero");
+        System.out.println("7 - Listar Movimientos por Categoria");        
         System.out.println("X - Salir");
         System.out.print("Ingrese Opcion: ");
         opc = Character.toUpperCase(In.readChar());
@@ -149,50 +155,83 @@ public class InterfazConsola {
         In.readLine();
     }
 
-    private void crearMovimiento() throws ResumideroValidationException {
+    private void crearMovimiento(boolean isDeposito) throws ResumideroValidationException {
         ListaGenerica<Movimiento> listaMoviminentos = Archivo.getDatos().getMovimientos();
         ListaGenerica<Cuenta> listaCuentas = Archivo.getDatos().getCuentas();
-        System.out.println("");
-        System.out.println("Nuevo Movimiento");
+        System.out.println("");        
         System.out.print("Numero de Cuenta: ");
-        int wCuenta = In.readInt();
-        listarCategorias();
+        int wCuenta = In.readInt();        
         Categoria cat = selectorCategoria();
         System.out.print("Monto: ");
-        double wMonto = In.readDouble();
-        System.out.print("Deposito: 'D' - Extraccion: 'E' ");
-        char deposito = In.readChar();
-        boolean isDeposito = deposito == 'D';
+        double wMonto = In.readDouble();        
         Cuenta cuenta = listaCuentas.buscar(wCuenta);
         if (cuenta != null && cat != null && wMonto > 0) {
-            boolean retirar = false;
+            boolean retirar;
             if (isDeposito) {
                 cuenta.depositar(wMonto);
             } else {
                 retirar = cuenta.retirar(wMonto);
+                if (!retirar){
+                    throw new ResumideroValidationException("No se pudo retirar el dinero");
+                }
             }
-            if (!isDeposito && !retirar) {
-                throw new ResumideroValidationException("No se pudo retirar el dinero");
-            }
-            Movimiento mov = new Movimiento(wCuenta, cat.getId(), wMonto, isDeposito);
+            int numeroMovimineto = listaMoviminentos.getCantidad() + 1;
+            Movimiento mov = new Movimiento(numeroMovimineto,wCuenta, cat.getId(), wMonto, isDeposito);
             listaMoviminentos.agregar(mov);
             Archivo.guardar();
             System.out.println("Movimiento creado exitosamente!");
         } else {
-            throw new ResumideroValidationException("No se creo el movimiento");
+            throw new ResumideroValidationException("No se creo el movimiento, posibles problemas \n La cuenta debe existir \n La Categoria debe existir \n El monto tiene q ser mayor a 0");
         }
         System.out.println("");
+    }
+    
+    private void nuevoGasto() throws ResumideroValidationException{
+        crearMovimiento(false);
+    }
+    
+    private void nuevoDeposito() throws ResumideroValidationException{    
+        crearMovimiento(true);
     }
 
     private void listarMovimientos() {
         ListaGenerica<Movimiento> lista = Archivo.getDatos().getMovimientos();
         System.out.println("");
         for (Movimiento mov : lista) {
-            System.out.println(mov.getFechaMovimiento() + "\t" + mov.getNumero());
+            printMovimiento(mov);                   
         }
         System.out.println("Cantidad de Movimientos: " + lista.getCantidad());
         System.out.println("");
         In.readLine();
+    }
+    
+    private void listarMovimientosCategoria() {
+        ListaGenerica<Categoria> listaCategorias = Archivo.getDatos().getCategorias();
+        ListaGenerica<Movimiento> listaMovimientos = Archivo.getDatos().getMovimientos();
+        System.out.println("");        
+        
+        for (Iterator it = listaCategorias.iterator(); it.hasNext();) {
+            Categoria cat = (Categoria)it.next();
+            System.out.println("Categoria: " + cat.getDescripcion());
+            System.out.println("FECHA" + tab + "NUMERO" + tab + "OPERACION" + tab + "CUENTA" + tab + "MONTO");        
+            for (Movimiento mov : listaMovimientos) {
+                if (mov.getCategoria() == cat.getId()){
+                    printMovimiento(mov);                   
+                }                
+            }            
+        }        
+        System.out.println("");
+        In.readLine();
+    }
+    
+    private void printMovimiento(Movimiento mov){
+        
+        String wfecha = toStringDate(mov.getFechaMovimiento());
+        String wNumero = String.valueOf(mov.getNumero());
+        String wCuenta = String.valueOf(mov.getCuenta());
+        String wMonto = String.valueOf(mov.getMonto());
+        String wTipo = mov.isDeposito() ? "DEPOSITO" : "GASTO";        
+        System.out.println(wfecha + tab + wNumero + tab + wTipo + tab + wCuenta + tab + wMonto);        
     }
 
     private char menuCategorias() {
@@ -213,7 +252,8 @@ public class InterfazConsola {
         System.out.println("Fin!");
     }
 
-    public Categoria selectorCategoria() throws ResumideroValidationException {
+    public Categoria selectorCategoria() {
+        listarCategorias();
         ListaGenerica<Categoria> lista = Archivo.getDatos().getCategorias();
         Categoria res = null;
         if (lista.getCantidad() > 0) {
@@ -227,11 +267,9 @@ public class InterfazConsola {
                 }
             } while (nro != 0 && res == null);
         } else {
-            throw new ResumideroValidationException("No hay categorias creadas");
+            System.out.println("No hay categorias creadas");
         }
-
         return res;
-
     }
 
     private void iniciarCategorias() throws ResumideroValidationException {
@@ -287,4 +325,10 @@ public class InterfazConsola {
     private void exportarResumidero() {
         throw new UnsupportedOperationException("Not yet implemented");
     }
+    
+    private String toStringDate(Date fecha){
+        DateFormat df = DateFormat.getDateInstance(DateFormat.SHORT, Locale.FRENCH);
+        return df.format(fecha);
+    }
+    
 }

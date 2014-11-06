@@ -62,9 +62,9 @@ public class Movimiento implements Serializable {
         this.monto = monto;
     }
 
-    public Movimiento(int cuenta, int categoria, double monto, boolean deposito) {
+    public Movimiento(int numero, int cuenta, int categoria, double monto, boolean deposito) {
         this.fechaMovimiento = new Date();
-        this.numero = this.hashCode();
+        this.numero = numero;
         this.cuenta = cuenta;
         this.categoria = categoria;
         this.monto = monto;
