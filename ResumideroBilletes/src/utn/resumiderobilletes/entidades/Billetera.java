@@ -11,9 +11,7 @@ import java.io.Serializable;
  *
  * @author Luciano Ybañez
  */
-public class Billetera extends Cuenta implements Serializable {
-
-    private static final String TIPO = "Billetera";
+public class Billetera extends Cuenta implements Serializable {    
     
     public Billetera(int pNumeroCuenta, double pSaldo) {
         super(pNumeroCuenta, pSaldo);
@@ -21,12 +19,13 @@ public class Billetera extends Cuenta implements Serializable {
 
     @Override
     public boolean retirar(double pMonto) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        saldo -= pMonto;
+        return true;
     }
 
     @Override
     public String getTipo() {
-        return TIPO;
+        return TipoCuenta.BILLETERA.getDescripcion();
     }
 
 }
