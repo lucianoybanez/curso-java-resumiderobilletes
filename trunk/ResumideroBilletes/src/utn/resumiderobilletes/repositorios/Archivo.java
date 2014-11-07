@@ -17,6 +17,8 @@ import java.io.ObjectOutputStream;
  * @author Luciano Ybañez
  */
 public class Archivo {
+    
+    private static final String RESUMIDERO_FILE = "..\\ResumideroBilletesDatos\\Resumidero.jdb";
 
     private static Datos datos;
 
@@ -28,7 +30,7 @@ public class Archivo {
     }
 
     public static void cargarDatos() {        
-        File f = new File("Resumidero.jdb");
+        File f = new File(RESUMIDERO_FILE);
         if (f.exists()) {
             try {
                 FileInputStream fi = new FileInputStream(f);
@@ -49,7 +51,7 @@ public class Archivo {
     }
 
     public static void guardar() {
-        File f = new File("Resumidero.jdb");
+        File f = new File(RESUMIDERO_FILE);
 
         try {
             FileOutputStream fo = new FileOutputStream(f);
