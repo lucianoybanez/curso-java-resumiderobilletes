@@ -11,7 +11,7 @@ import java.io.Serializable;
  *
  * @author Luciano Ybañez
  */
-public class Categoria implements Serializable {
+public class Categoria implements Filtrable, Serializable {
 
     private final String descripcion;
 
@@ -34,5 +34,15 @@ public class Categoria implements Serializable {
     public String toString(){
         return id + " - " + descripcion;
     }
+
+    @Override
+    public boolean pertenece(String pToken)
+    {
+        boolean wRes = false;
+        if (descripcion.contains(pToken))
+            wRes = true;        
+        return wRes;
+    }
+    
 
 }

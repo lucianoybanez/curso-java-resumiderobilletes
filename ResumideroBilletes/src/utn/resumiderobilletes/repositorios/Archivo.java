@@ -18,7 +18,7 @@ import java.io.ObjectOutputStream;
  */
 public class Archivo {
     
-    private static final String RESUMIDERO_FILE = "..\\ResumideroBilletesDatos\\Resumidero.jdb";
+    private static final String RESUMIDERO_FILE = "..\\Resumidero.jdb";
 
     private static Datos datos;
 
