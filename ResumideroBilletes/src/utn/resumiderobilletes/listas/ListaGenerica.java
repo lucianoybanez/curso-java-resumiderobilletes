@@ -6,9 +6,12 @@
 package utn.resumiderobilletes.listas;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.LinkedList;
+import java.util.List;
+import java.util.TreeSet;
 import utn.resumiderobilletes.entidades.Categoria;
 import utn.resumiderobilletes.entidades.Cuenta;
 
@@ -93,5 +96,11 @@ public class ListaGenerica<T> implements Iterable<T>, Serializable {
             idxitems.remove(getKey((T) res));
             actual--;
         }
-    }    
+    }
+    
+    public List<T> getTodos(){
+        ArrayList<T> al = new ArrayList<>(new TreeSet(items));
+        return al;
+    }   
+   
 }
