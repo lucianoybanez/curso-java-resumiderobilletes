@@ -12,7 +12,7 @@ import java.util.Date;
  *
  * @author Luciano Ybañez
  */
-public class Movimiento implements Serializable {
+public class Movimiento implements Serializable, Comparable {
 
     private final Date fechaMovimiento;
 
@@ -77,5 +77,19 @@ public class Movimiento implements Serializable {
             return ((Movimiento) o).getNumero() == this.getNumero();
         }
         return true;
+    }
+
+    @Override
+    public int compareTo(Object o) {
+         int res;
+        if (o instanceof Movimiento)
+        {
+            
+            res = this.fechaMovimiento.compareTo(((Movimiento) o).getFechaMovimiento());
+        }
+        else
+            throw new RuntimeException("El tipo del objeto debe ser Movimiento.");
+        
+        return res;
     }
 }

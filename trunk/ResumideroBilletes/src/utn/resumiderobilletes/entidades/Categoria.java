@@ -6,6 +6,8 @@
 package utn.resumiderobilletes.entidades;
 
 import java.io.Serializable;
+import java.util.List;
+import utn.resumiderobilletes.listas.ListaGenerica;
 
 /**
  *
@@ -16,6 +18,8 @@ public class Categoria implements Filtrable, Serializable {
     private final String descripcion;
 
     private final int id;
+    
+    private ListaGenerica<Movimiento> movimientos;
 
     public int getId() {
         return id;
@@ -28,11 +32,14 @@ public class Categoria implements Filtrable, Serializable {
     public Categoria(int id, String descripcion) {
         this.id = id;
         this.descripcion = descripcion;
+        this.movimientos = new ListaGenerica<>();
     }
     
     @Override
     public String toString(){
-        return id + " - " + descripcion;
+      
+        String res = id + " - " + descripcion + " (" + movimientos.getCantidad() + ")";
+        return res;
     }
 
     @Override
@@ -43,6 +50,17 @@ public class Categoria implements Filtrable, Serializable {
             wRes = true;        
         return wRes;
     }
+    
+    public List<Movimiento> getMovimientos()
+    {
+        return movimientos.getTodos();
+    }
+    
+     public void agregar(Movimiento movimiento)
+    {
+        movimientos.agregar(movimiento);
+    }
+   
     
 
 }

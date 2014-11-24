@@ -178,6 +178,7 @@ public class InterfazConsola  {
             int numeroMovimineto = listaMoviminentos.getCantidad() + 1;
             Movimiento mov = new Movimiento(numeroMovimineto,wCuenta, cat.getId(), wMonto, isDeposito);
             listaMoviminentos.agregar(mov);
+            cat.agregar(mov);
             Archivo.guardar();
             System.out.println("Movimiento creado exitosamente!");
         } else {

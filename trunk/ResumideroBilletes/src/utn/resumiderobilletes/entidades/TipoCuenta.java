@@ -5,6 +5,8 @@
  */
 package utn.resumiderobilletes.entidades;
 
+import utn.resumiderobilletes.excepciones.ResumideroException;
+
 /**
  *
  * @author Luciano Ybañez
@@ -23,6 +25,16 @@ public enum TipoCuenta {
 
     TipoCuenta(String descripcion) {
         this.descripcion = descripcion;
+    }
+    
+    public static TipoCuenta getByDescription(String descripcion){
+        for (TipoCuenta item : TipoCuenta.values()) {
+            if (descripcion.equals(item.getDescripcion()))
+            {
+                return item;
+            }
+        }
+        throw new ResumideroException("No se encuentra el tipo de cuenta");    
     }
 
 }
