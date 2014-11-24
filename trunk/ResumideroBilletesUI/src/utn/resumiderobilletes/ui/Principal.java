@@ -13,7 +13,7 @@ import utn.resumiderobilletes.ui.forms.FrmPrincipal;
 
 /**
  *
- * @author libanez
+ * @author Luciano Ybañez
  */
 public class Principal {
 
