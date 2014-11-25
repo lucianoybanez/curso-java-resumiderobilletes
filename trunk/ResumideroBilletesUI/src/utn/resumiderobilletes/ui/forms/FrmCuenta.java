@@ -56,7 +56,7 @@ public class FrmCuenta extends javax.swing.JFrame {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
-        jLabel1.setFont(new java.awt.Font("SansSerif", 0, 14)); // NOI18N
+        jLabel1.setFont(new java.awt.Font("SansSerif", 1, 18)); // NOI18N
         jLabel1.setText("Crear Cuenta");
 
         comboCuenta.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
@@ -111,7 +111,7 @@ public class FrmCuenta extends javax.swing.JFrame {
                     .addComponent(txtMonto, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(45, 45, 45)
                 .addComponent(jButton1)
-                .addContainerGap(90, Short.MAX_VALUE))
+                .addContainerGap(85, Short.MAX_VALUE))
         );
 
         pack();
@@ -138,7 +138,8 @@ public class FrmCuenta extends javax.swing.JFrame {
                 default:
                     throw new ResumideroException("Problemas en metodo crearCuenta seleccionando el Tipo de Cuenta");
             } 
-            cuentas.agregar(cta);            
+            cuentas.agregar(cta);   
+            frmParent.iniciarFormulario();
             JOptionPane.showMessageDialog(this, "La cuenta se creo exitosamente!!!", "Error", JOptionPane.INFORMATION_MESSAGE);
             Archivo.guardar();            
             this.dispose();

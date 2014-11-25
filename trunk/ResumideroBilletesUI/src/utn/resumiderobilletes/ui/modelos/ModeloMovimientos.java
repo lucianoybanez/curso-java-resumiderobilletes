@@ -18,7 +18,7 @@ import utn.resumiderobilletes.utils.DateUtil;
 public class ModeloMovimientos extends AbstractTableModel
 {
 
-    private String[] columnas = {"Nº", "Fecha", "Monto", "Operación"};
+    private String[] columnas = {"Nº", "Fecha", "Monto", "Operación" , "N° Cuenta"};
     private List<Movimiento> movimientos;
 
     public ModeloMovimientos()
@@ -45,7 +45,7 @@ public class ModeloMovimientos extends AbstractTableModel
     @Override
     public int getColumnCount()
     {
-        return 4;
+        return 5;
     }
 
     @Override
@@ -68,6 +68,9 @@ public class ModeloMovimientos extends AbstractTableModel
                     break;
                 case 3:
                     res = aux.isDeposito() ? "Deposito" : "Extracción";
+                    break;
+                case 4:
+                    res = String.valueOf(aux.getCuenta());
                     break;
 
             }

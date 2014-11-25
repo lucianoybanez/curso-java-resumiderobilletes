@@ -11,9 +11,11 @@ import javax.swing.JOptionPane;
 import javax.swing.tree.DefaultMutableTreeNode;
 import javax.swing.tree.DefaultTreeModel;
 import utn.resumiderobilletes.entidades.Categoria;
+import utn.resumiderobilletes.entidades.Cuenta;
 import utn.resumiderobilletes.entidades.Movimiento;
 import utn.resumiderobilletes.listas.ListaGenerica;
 import utn.resumiderobilletes.repositorios.Archivo;
+import utn.resumiderobilletes.ui.modelos.ModeloCuentas;
 import utn.resumiderobilletes.ui.modelos.ModeloMovimientos;
 
 /**
@@ -29,11 +31,18 @@ public class FrmPrincipal extends javax.swing.JFrame {
     public FrmPrincipal() {
         initComponents();
         
+        iniciarFormulario();
+        
+    }
+
+    public void iniciarFormulario() {
         cargarCategorias();
         
         List<Movimiento> movimientos = Archivo.getDatos().getMovimientos().getTodos();
         setearGrilla(movimientos);
         
+        List<Cuenta> cuentas = Archivo.getDatos().getCuentas().getTodos();
+        seterGrillaCuentas(cuentas);
     }
 
     /**
@@ -52,7 +61,14 @@ public class FrmPrincipal extends javax.swing.JFrame {
         jButton1 = new javax.swing.JButton();
         jScrollPane2 = new javax.swing.JScrollPane();
         tableMovimientos = new javax.swing.JTable();
-        jButton2 = new javax.swing.JButton();
+        btCuenta = new javax.swing.JButton();
+        btMovimiento = new javax.swing.JButton();
+        lblTotalCategorias = new javax.swing.JLabel();
+        jLabel2 = new javax.swing.JLabel();
+        jScrollPane3 = new javax.swing.JScrollPane();
+        tblCuentas = new javax.swing.JTable();
+        jLabel3 = new javax.swing.JLabel();
+        lblCuentas = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         addWindowListener(new java.awt.event.WindowAdapter() {
@@ -73,7 +89,7 @@ public class FrmPrincipal extends javax.swing.JFrame {
         txtCategoria.setToolTipText("");
         txtCategoria.setName("txtCategoria"); // NOI18N
 
-        jLabel1.setText("Nueva Categoria");
+        jLabel1.setText("Categorias");
 
         jButton1.setText("OK");
         jButton1.addActionListener(new java.awt.event.ActionListener() {
@@ -95,40 +111,85 @@ public class FrmPrincipal extends javax.swing.JFrame {
         ));
         jScrollPane2.setViewportView(tableMovimientos);
 
-        jButton2.setText("Crear Cuenta");
-        jButton2.addActionListener(new java.awt.event.ActionListener() {
+        btCuenta.setText("Crear Cuenta");
+        btCuenta.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton2ActionPerformed(evt);
+                btCuentaActionPerformed(evt);
             }
         });
+
+        btMovimiento.setText("Crear Movimiento");
+        btMovimiento.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btMovimientoActionPerformed(evt);
+            }
+        });
+
+        lblTotalCategorias.setText("Total de categorias:");
+
+        jLabel2.setText("Movimientos");
+
+        tblCuentas.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null}
+            },
+            new String [] {
+                "Title 1", "Title 2", "Title 3", "Title 4"
+            }
+        ));
+        jScrollPane3.setViewportView(tblCuentas);
+
+        jLabel3.setText("Cuentas");
+
+        lblCuentas.setText("jLabel4");
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(23, 23, 23)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 193, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                                .addComponent(txtCategoria)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addComponent(jButton1)))
+                        .addGap(23, 23, 23)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 193, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                                    .addComponent(txtCategoria)
+                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                    .addComponent(jButton1)))
+                            .addComponent(jLabel1)
+                            .addGroup(layout.createSequentialGroup()
+                                .addGap(10, 10, 10)
+                                .addComponent(lblTotalCategorias)))
                         .addGap(34, 34, 34)
-                        .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addComponent(jLabel1)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jLabel2)
+                            .addComponent(jLabel3)
+                            .addComponent(lblCuentas)))
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(55, 55, 55)
-                        .addComponent(jButton2)))
+                        .addGap(156, 156, 156)
+                        .addComponent(btCuenta)
+                        .addGap(84, 84, 84)
+                        .addComponent(btMovimiento)))
                 .addContainerGap(98, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(70, 70, 70)
-                .addComponent(jLabel1)
+                .addGap(29, 29, 29)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(btCuenta)
+                    .addComponent(btMovimiento))
+                .addGap(18, 18, 18)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel1)
+                    .addComponent(jLabel2))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addGroup(layout.createSequentialGroup()
@@ -136,11 +197,17 @@ public class FrmPrincipal extends javax.swing.JFrame {
                             .addComponent(txtCategoria, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(jButton1))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 260, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 260, Short.MAX_VALUE))
                     .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE))
-                .addGap(31, 31, 31)
-                .addComponent(jButton2)
-                .addContainerGap(167, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(lblTotalCategorias)
+                .addGap(20, 20, 20)
+                .addComponent(jLabel3)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(lblCuentas)
+                .addContainerGap(259, Short.MAX_VALUE))
         );
 
         jLabel1.getAccessibleContext().setAccessibleName("Nueva Categoria:");
@@ -177,8 +244,8 @@ public class FrmPrincipal extends javax.swing.JFrame {
     }//GEN-LAST:event_formWindowClosing
 
     private void treeCategoriasValueChanged(javax.swing.event.TreeSelectionEvent evt) {//GEN-FIRST:event_treeCategoriasValueChanged
-        
-        if (((DefaultMutableTreeNode) treeCategorias.getLastSelectedPathComponent()).getUserObject() instanceof Categoria)
+                
+        if (treeCategorias.getLastSelectedPathComponent()!= null && ((DefaultMutableTreeNode) treeCategorias.getLastSelectedPathComponent()).getUserObject() instanceof Categoria)
         {
             mCatSelected = (Categoria) ((DefaultMutableTreeNode) treeCategorias.getLastSelectedPathComponent()).getUserObject();
             setearGrilla(mCatSelected.getMovimientos());
@@ -191,11 +258,17 @@ public class FrmPrincipal extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_treeCategoriasValueChanged
 
-    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+    private void btCuentaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btCuentaActionPerformed
         FrmCuenta form = new FrmCuenta();
         form.setPadre(this);
         form.setVisible(true);
-    }//GEN-LAST:event_jButton2ActionPerformed
+    }//GEN-LAST:event_btCuentaActionPerformed
+
+    private void btMovimientoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btMovimientoActionPerformed
+       FrmMovimiento frmMovimiento = new FrmMovimiento();
+       frmMovimiento.setPadre(this);
+       frmMovimiento.setVisible(true);
+    }//GEN-LAST:event_btMovimientoActionPerformed
 
     /**
      * @param args the command line arguments
@@ -233,38 +306,36 @@ public class FrmPrincipal extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton btCuenta;
+    private javax.swing.JButton btMovimiento;
     private javax.swing.JButton jButton1;
-    private javax.swing.JButton jButton2;
     private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel2;
+    private javax.swing.JLabel jLabel3;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
+    private javax.swing.JScrollPane jScrollPane3;
+    private javax.swing.JLabel lblCuentas;
+    private javax.swing.JLabel lblTotalCategorias;
     private javax.swing.JTable tableMovimientos;
+    private javax.swing.JTable tblCuentas;
     private javax.swing.JTree treeCategorias;
     private javax.swing.JTextField txtCategoria;
     // End of variables declaration//GEN-END:variables
 
-      public void cargarCategorias()
+    public void cargarCategorias()
     {
         DefaultMutableTreeNode raiz = new DefaultMutableTreeNode();
         raiz.setUserObject("Todas");
-//        DefaultMutableTreeNode interno = new DefaultMutableTreeNode("Cuentas");
-//        raiz.add(interno);
-//        interno = new DefaultMutableTreeNode("Categorias");
-//        raiz.add(interno);
-
-        //For para cada categoria agregado un nuevo nodo;
         ListaGenerica<Categoria> lista = Archivo.getDatos().getCategorias();
         for (Categoria item : lista)
         {
             DefaultMutableTreeNode aux = new DefaultMutableTreeNode(item);
             raiz.add(aux);
-            //interno.add(aux);
-        }
-        
-        DefaultTreeModel modelo = new DefaultTreeModel(raiz);
-
-        treeCategorias.setModel(modelo);
-
+        }        
+        DefaultTreeModel modelo = new DefaultTreeModel(raiz);        
+        treeCategorias.setModel(modelo);        
+        lblTotalCategorias.setText("Total de categorias: " + lista.getCantidad());
     }
       
     private void setearGrilla(List<Movimiento> lista)
@@ -272,6 +343,12 @@ public class FrmPrincipal extends javax.swing.JFrame {
         ModeloMovimientos model = new ModeloMovimientos(lista);
         tableMovimientos.setModel(model);
 
+    }
+
+    private void seterGrillaCuentas(List<Cuenta> cuentas) {
+        ModeloCuentas mode = new ModeloCuentas(cuentas);
+        tblCuentas.setModel(mode);
+        lblCuentas.setText("Cantidad de Cuentas: " + cuentas.size());
     }
     
     
