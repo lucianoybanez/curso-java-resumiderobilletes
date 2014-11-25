@@ -10,7 +10,7 @@ import java.io.Serializable;
  *
  * @author Luciano Ybañez
  */
-public abstract class Cuenta implements Serializable {
+public abstract class Cuenta implements Comparable,Serializable {
 
     private final int numeroCuenta;
     protected double saldo;
@@ -36,8 +36,9 @@ public abstract class Cuenta implements Serializable {
     public String toString() {
         StringBuilder wRes = new StringBuilder();
 
-        wRes.append("\tNumero de Cuenta:\t").append(numeroCuenta);
-        wRes.append("\n\tSaldo:\t").append(saldo);
+        wRes.append("Nº:").append(numeroCuenta);
+        wRes.append("\t - ").append(getTipo());
+        wRes.append("\t - ").append(saldo);
 
         return wRes.toString();
     }
@@ -52,5 +53,24 @@ public abstract class Cuenta implements Serializable {
             pCuenta.depositar(pMonto);
         }
         return retiro;
+    }
+
+    @Override
+    public int compareTo(Object o) {
+           int res;
+        if (o instanceof Cuenta)
+        {
+            if (this.getNumeroCuenta() == ((Cuenta)o).getNumeroCuenta()){
+                res = 0;
+            }else if (this.getNumeroCuenta() > ((Cuenta)o).getNumeroCuenta()){
+                res = 1;
+            }else{
+                res = -1;
+            }            
+        }
+        else
+            throw new RuntimeException("El tipo del objeto debe ser Cuenta.");
+        
+        return res;
     }
 }
