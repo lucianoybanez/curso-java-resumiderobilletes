@@ -29,7 +29,7 @@ public class FrmCuenta extends javax.swing.JFrame {
     ListaGenerica<Cuenta> cuentas = Archivo.getDatos().getCuentas();
     double monto = 0;
     private FrmPrincipal frmParent;
-    
+
     /**
      * Creates new form FrmCuenta
      */
@@ -53,6 +53,8 @@ public class FrmCuenta extends javax.swing.JFrame {
         jLabel3 = new javax.swing.JLabel();
         txtMonto = new javax.swing.JTextField();
         jButton1 = new javax.swing.JButton();
+        lblTarjeta = new javax.swing.JLabel();
+        txtTarjeta = new javax.swing.JTextField();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -60,6 +62,26 @@ public class FrmCuenta extends javax.swing.JFrame {
         jLabel1.setText("Crear Cuenta");
 
         comboCuenta.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        comboCuenta.addItemListener(new java.awt.event.ItemListener() {
+            public void itemStateChanged(java.awt.event.ItemEvent evt) {
+                comboCuentaItemStateChanged(evt);
+            }
+        });
+        comboCuenta.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                comboCuentaActionPerformed(evt);
+            }
+        });
+        comboCuenta.addPropertyChangeListener(new java.beans.PropertyChangeListener() {
+            public void propertyChange(java.beans.PropertyChangeEvent evt) {
+                comboCuentaPropertyChange(evt);
+            }
+        });
+        comboCuenta.addVetoableChangeListener(new java.beans.VetoableChangeListener() {
+            public void vetoableChange(java.beans.PropertyChangeEvent evt)throws java.beans.PropertyVetoException {
+                comboCuentaVetoableChange(evt);
+            }
+        });
 
         jLabel2.setText("Tipo:");
 
@@ -74,6 +96,8 @@ public class FrmCuenta extends javax.swing.JFrame {
             }
         });
 
+        lblTarjeta.setText("Nombre de la Tarjeta:");
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -81,20 +105,25 @@ public class FrmCuenta extends javax.swing.JFrame {
             .addGroup(layout.createSequentialGroup()
                 .addGap(26, 26, 26)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                        .addGroup(layout.createSequentialGroup()
-                            .addComponent(jLabel3)
-                            .addGap(18, 18, 18)
-                            .addComponent(txtMonto))
-                        .addGroup(layout.createSequentialGroup()
-                            .addComponent(jLabel2)
-                            .addGap(53, 53, 53)
-                            .addComponent(comboCuenta, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addComponent(jLabel1))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(jLabel3)
+                                .addGap(18, 18, 18)
+                                .addComponent(txtMonto))
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(jLabel2)
+                                .addGap(53, 53, 53)
+                                .addComponent(comboCuenta, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(jLabel1))
+                        .addGap(33, 33, 33)
+                        .addComponent(lblTarjeta)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(txtTarjeta, javax.swing.GroupLayout.PREFERRED_SIZE, 63, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(layout.createSequentialGroup()
                         .addGap(80, 80, 80)
                         .addComponent(jButton1)))
-                .addContainerGap(223, Short.MAX_VALUE))
+                .addContainerGap(136, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -104,7 +133,9 @@ public class FrmCuenta extends javax.swing.JFrame {
                 .addGap(30, 30, 30)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel2)
-                    .addComponent(comboCuenta, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(comboCuenta, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(lblTarjeta)
+                    .addComponent(txtTarjeta, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(31, 31, 31)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel3)
@@ -114,40 +145,80 @@ public class FrmCuenta extends javax.swing.JFrame {
                 .addContainerGap(85, Short.MAX_VALUE))
         );
 
+        lblTarjeta.getAccessibleContext().setAccessibleName("jbl4");
+
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        
-        String selected = (String)comboCuenta.getSelectedItem();
-        boolean isNumber = isnumber(txtMonto.getText());
-        TipoCuenta cmboitem = TipoCuenta.getByDescription(selected);
-        if(isNumber){            
-            Cuenta cta;
-            int wNumero = cuentas.getCantidad() + 1;
-            switch (cmboitem) {
-                case BILLETERA:
-                    cta = new Billetera(wNumero, monto);
-                    break;
-                case CAJADEAHORRO:
-                    cta = new CajaDeAhorro(wNumero, monto);
-                    break;
-                case TARJETADECREDITO:                    
-                    cta = new TarjetaDeCredito(wNumero, monto, "VISA");
-                    break;
-                default:
-                    throw new ResumideroException("Problemas en metodo crearCuenta seleccionando el Tipo de Cuenta");
-            } 
-            cuentas.agregar(cta);   
-            frmParent.iniciarFormulario();
-            JOptionPane.showMessageDialog(this, "La cuenta se creo exitosamente!!!", "Error", JOptionPane.INFORMATION_MESSAGE);
-            Archivo.guardar();            
-            this.dispose();
+        try {
+            String selected = (String) comboCuenta.getSelectedItem();
+            boolean isNumber = isnumber(txtMonto.getText());
+            TipoCuenta cmboitem = TipoCuenta.getByDescription(selected);
+            if (isNumber) {
+                Cuenta cta;
+                int wNumero = cuentas.getCantidad() + 1;
+                switch (cmboitem) {
+                    case BILLETERA:
+                        cta = new Billetera(wNumero, monto);
+                        break;
+                    case CAJADEAHORRO:
+                        cta = new CajaDeAhorro(wNumero, monto);
+                        break;
+                    case TARJETADECREDITO:
+                        if (txtTarjeta.getText().isEmpty()) {
+                            throw new ResumideroException("El nombre de la tarjeta no puede ser vacio.");
+                        }
+                        cta = new TarjetaDeCredito(wNumero, monto, txtTarjeta.getText().toUpperCase().trim());
+                        break;
+                    default:
+                        throw new ResumideroException("Problemas en metodo crearCuenta seleccionando el Tipo de Cuenta");
+                }
+                cuentas.agregar(cta);
+                frmParent.iniciarFormulario();
+                JOptionPane.showMessageDialog(this, "La cuenta se creo exitosamente!!!", "Error", JOptionPane.INFORMATION_MESSAGE);
+                Archivo.guardar();
+                this.dispose();
+            } else {
+                throw new ResumideroException("El monto tiene que ser un numero valido mayor que 0.");                
+            }
+
+        } catch (ResumideroException e) {
+            JOptionPane.showMessageDialog(this, e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
         }
-        else{
-            JOptionPane.showMessageDialog(this, "El monto tiene que ser un numero valido mayor que 0.", "Error", JOptionPane.ERROR_MESSAGE);
-        }
+
     }//GEN-LAST:event_jButton1ActionPerformed
+
+    private void comboCuentaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_comboCuentaActionPerformed
+
+
+    }//GEN-LAST:event_comboCuentaActionPerformed
+
+    private void comboCuentaPropertyChange(java.beans.PropertyChangeEvent evt) {//GEN-FIRST:event_comboCuentaPropertyChange
+
+
+    }//GEN-LAST:event_comboCuentaPropertyChange
+
+    private void comboCuentaVetoableChange(java.beans.PropertyChangeEvent evt)throws java.beans.PropertyVetoException {//GEN-FIRST:event_comboCuentaVetoableChange
+
+    }//GEN-LAST:event_comboCuentaVetoableChange
+
+    private void comboCuentaItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_comboCuentaItemStateChanged
+        String selected = (String) comboCuenta.getSelectedItem();
+        if (selected != null && !selected.isEmpty()) {
+            TipoCuenta cmboitem = TipoCuenta.getByDescription(selected);
+            if (cmboitem.equals(TipoCuenta.TARJETADECREDITO)) {
+                setTarjetaVisible(true);
+            } else {
+                setTarjetaVisible(false);
+            }
+        }
+    }//GEN-LAST:event_comboCuentaItemStateChanged
+
+    private void setTarjetaVisible(boolean value) {
+        txtTarjeta.setVisible(value);
+        lblTarjeta.setVisible(value);
+    }
 
     /**
      * @param args the command line arguments
@@ -190,16 +261,18 @@ public class FrmCuenta extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
+    private javax.swing.JLabel lblTarjeta;
     private javax.swing.JTextField txtMonto;
+    private javax.swing.JTextField txtTarjeta;
     // End of variables declaration//GEN-END:variables
 
-    private void cargarDatosIniciales() {        
+    private void cargarDatosIniciales() {
         txtMonto.setText("");
         cargarComboCuentas();
+        setTarjetaVisible(false);
     }
-    
-    public void setPadre(FrmPrincipal pPadre)
-    {
+
+    public void setPadre(FrmPrincipal pPadre) {
         frmParent = pPadre;
     }
 
@@ -213,13 +286,13 @@ public class FrmCuenta extends javax.swing.JFrame {
 
     private boolean isnumber(String text) {
         try {
-            monto = Double.valueOf(text);                
-            if (monto>0){
-                return true;    
+            monto = Double.valueOf(text);
+            if (monto > 0) {
+                return true;
             }
             return false;
         } catch (NumberFormatException e) {
             return false;
-        }        
+        }
     }
 }
