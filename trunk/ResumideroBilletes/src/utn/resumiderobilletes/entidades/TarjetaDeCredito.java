@@ -50,7 +50,7 @@ public class TarjetaDeCredito extends Cuenta implements Serializable {
 
     @Override
     public String getTipo() {
-        return TipoCuenta.TARJETADECREDITO.getDescripcion();
+        return TipoCuenta.TARJETADECREDITO.getDescripcion() + "(" + this.nombreTarjeta + ")";
     }
 
 }
