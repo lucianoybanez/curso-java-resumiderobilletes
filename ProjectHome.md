@@ -1,0 +1,4 @@
+- Curso de Java en UTN Cordoba.
+- Fundación Proydesa.
+- Profesor: Ing. Felipe Steffolani.
+- Agosto - Diciembre 2014.
