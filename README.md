@@ -3,4 +3,4 @@ The Java Project was developed for learning purposes in [UTN Cordoba](https://ww
 
 
 
-This project is think for all of them who whants to start from scrach in the object oriented programming. 
+This project is thought for all of them who wants to start from scratch in the object oriented programming.
